@@ -27,8 +27,7 @@
         <a href="{% url 'single_post' id=post.id|add:'1' %}" class="fh5co-post-next"><span>Next <i class="icon-chevron-right"></i></span></a>
 
 	{% endif %}
-{#    	<a href="{% url 'single_post' id=post.id|add:'1' %}" class="fh5co-post-prev"><span><i class="icon-chevron-left"></i> Prev</span></a>#}
-{#      <a href="{% url 'single_post' id=post.id|add:'1' %}" class="fh5co-post-next"><span>Next <i class="icon-chevron-right"></i></span></a>#}
+
         <div class="row fh5co-post-entry single-entry">
 			<article class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
 				<figure class="animate-box">
@@ -47,6 +46,21 @@
 					</div>
 				</div>
 			</article>
+        <div class="container">
+             {% for p in related %}
+        <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+            <figure>
+                {{ p.id }}
+                <a href="{% url 'single_post' id=p.id %}"><img src="{{ p.image.url }}" alt="Image" class="img-responsive"></a>
+            </figure>
+              <span class="fh5co"><a href="">{{ p.author_name.name}}</a></span>
+            <span class="fh5co-meta"><a href="">{{ p.category_name.name }}</a></span>
+            <h2 class="fh5co-article-title"><a href="">{{ p.title }}</a></h2>
+            <span class="fh5co-meta fh5co-date">{{ p.posted_on }}</span>
+        </article>
+    {% endfor %}
+
+        </div>
 		</div>
 
 {% endblock %}

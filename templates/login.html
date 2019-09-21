@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block stylesheet %}{% endblock %}
+{% block profile %}{% endblock %}
+{% block content %}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+             <div class="panel panel-default">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                <div class="form-group">
+                <label for="user">Name</label>
+                <input type="text" name="user" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" name="password" id="pwd">
+               </div>
+
+               <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+             </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}{% endblock %}

@@ -3,21 +3,15 @@
 {#{% block stylesheet %}{% url 'category'  category=p.category_name.id %}{% endblock %}#}
 {% block profile %}{% endblock %}
 {% block content %}
-{#      {% for p in category %}#}
-{##}
-{#                {{ p.id }}.{{ p.category_name.name }}#}
-{##}
-{#    {% endfor %}#}
-
-
     {% for p in post %}
         <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
             <figure>
                 {{ p.id }}
                 <a href="{% url 'single_post' id=p.id %}"><img src="{{ p.image.url }}" alt="Image" class="img-responsive"></a>
             </figure>
-            <span class="fh5co-meta"><a href="#">{{ p.title }}</a></span>
-            <h2 class="fh5co-article-title"><a href="">{{ p.category_name.name }}</a></h2>
+              <span class="fh5co"><a href="">Name: {{ p.author_name.name}}</a></span>
+            <span class="fh5co-meta"><a href=""> Category : {{ p.category_name.name }}</a></span>
+            <h4 class="fh5co-article-title"><a href=""> Title : {{ p.title }}</a></h4>
             <span class="fh5co-meta fh5co-date">{{ p.posted_on }}</span>
         </article>
     {% endfor %}
