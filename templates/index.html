@@ -4,16 +4,37 @@
 {% block profile %}{% endblock %}
 {% block content %}
     {% for p in post %}
-        <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+            <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
             <figure>
                 {{ p.id }}
                 <a href="{% url 'single_post' id=p.id %}"><img src="{{ p.image.url }}" alt="Image" class="img-responsive"></a>
             </figure>
-              <span class="fh5co"><a href="">Name: {{ p.author_name.name}}</a></span>
-            <span class="fh5co-meta"><a href=""> Category : {{ p.category_name.name }}</a></span>
+              <span class="fh5co"><a href="{% url 'author' name=p.author_name.name.username %}">Name: {{ p.author_name.name}}</a></span>
+            <span class="fh5co-meta"><a href="{% url 'category' name=p.category_name.name %}"> Category : {{ p.category_name.name }}</a></span>
             <h4 class="fh5co-article-title"><a href=""> Title : {{ p.title }}</a></h4>
             <span class="fh5co-meta fh5co-date">{{ p.posted_on }}</span>
         </article>
     {% endfor %}
+</div>
+
+<div class="container-fluid">
+        <div class="pagination">
+        <span class="step-links">
+        {% if post.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ post.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ post.number }} of {{ post.paginator.num_pages }}.
+        </span>
+
+        {% if post.has_next %}
+            <a href="?page={{ post.next_page_number }}">next</a>
+            <a href="?page={{ post.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    </div>
 
 {% endblock %}

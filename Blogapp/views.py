@@ -1,3 +1,6 @@
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from Blogapp.forms import CreatePost
 from .models import Article, Author, Category
@@ -9,7 +12,17 @@ from  django.contrib.auth import login, logout ,authenticate
 #     return render(request, 'index.html', {'post': post, 'category': category})
 
 def index(request):
-    post = Article.objects.all()
+    post1 = Article.objects.all()
+
+    search = request.GET.get('q')
+    if search:
+        post1 = post1.filter(
+            Q(title__icontains=search) |
+            Q(body__icontains=search)
+        )
+    paginator = Paginator(post1, 8)  # Show 25 contacts per page
+    page = request.GET.get('page')
+    post = paginator.get_page(page)
     return render(request, 'index.html', {'post': post})
 
 
@@ -31,13 +44,13 @@ def get_single_post_detail(request, id):
     return render(request, "single.html", context)
 
 
-# def get_category_post_detail(request, name):
-#     cat = get_object_or_404(Category, name=name)
-#     post = Article.objects.filter(category_name=cat.id)
-#     context = {
-#         "post": post,
-#     }
-#     return render(request, "category.html", context)
+def get_category_post_detail(request, name):
+    cat = get_object_or_404(Category, name=name)
+    post = Article.objects.filter(category_name=cat.id)
+    context = {
+        "post": post,
+    }
+    return render(request, "category.html", context)
 
 
 def create_post(request):
@@ -66,3 +79,14 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('index')
+
+
+def author(request, name):
+    post_author = get_object_or_404(User, username=name)
+    auth = get_object_or_404(Author, name=post_author.id)
+    post = Article.objects.filter(author_name=auth.id)
+    context ={
+        'auth': auth,
+        'post': post
+    }
+    return render(request, 'author.html', context)

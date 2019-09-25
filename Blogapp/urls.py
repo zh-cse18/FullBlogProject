@@ -8,7 +8,8 @@ urlpatterns =[
      path('create/', views.create_post, name='create_post'),
      path('login/', views.login_user, name='login'),
      path('logout/', views.logout_user, name='logout'),
-     # path('category/<int:name>', views.get_category_post_detail, name='category'),
+     path('author/<name>', views.author, name='author'),
+     path('category/<name>', views.get_category_post_detail, name='category'),
 ]
 
 # path('', views.base, name='base'),
